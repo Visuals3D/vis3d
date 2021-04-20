@@ -9,8 +9,7 @@ A small cli to generate Visuals3D Microservices
 ## Install
 
 ```bash
-npm install
-npm link
+npm install -g @visuals3d/vis3d
 ```
 
 
