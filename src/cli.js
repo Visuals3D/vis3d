@@ -2,6 +2,7 @@ import arg from 'arg';
 import inquirer from 'inquirer';
 import { exit } from 'process';
 import { generate } from './main';
+import path from 'path';
 
 
 const validTemplates = ['microservice'];
@@ -21,6 +22,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         }
     );
     return {
+        packageDir: path.join(rawArgs[1], '../../'),
         skipPrompts: args['--yes'] || false,
         git: args['--git'] || false,
         action: args._[0],

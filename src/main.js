@@ -49,14 +49,7 @@ async function copyTemplateFiles(templatePath, targetPath) {
 
   export async function generate(options) {
     
-    const fullPathName = __dirname;
-    console.log('fullPathName', fullPathName)
-    const templateDir = path.resolve(
-      fullPathName.substr(fullPathName.indexOf('/')),
-      '../templates',
-      options.templateType.toLowerCase()
-    );
-        console.log(templateDir)
+    const templateDir = path.join(options.packageDir, 'templates', options.templateType);
     try {
       await access(templateDir, fs.constants.R_OK);
     } catch (err) {
