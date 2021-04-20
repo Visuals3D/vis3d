@@ -17,7 +17,7 @@ npm install -g @visuals3d/vis3d
 ## Run 
 
 ```bash
-vis3d generate microservice mymicroservice 
+vis3d generate microservice my-mycroservice-name 
 ```
 
 
