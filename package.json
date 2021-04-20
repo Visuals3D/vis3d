@@ -1,0 +1,41 @@
+{
+  "name": "@visuals3d/vis3d",
+  "version": "1.0.0",
+  "description": "A small cli to create microservices and generate internal code templates",
+  "main": "index.js",
+  "bin": {
+    "@visuals3d/vis3d": "bin/vis3d",
+    "vis3d": "bin/vis3d"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Visuals3D/vis3d.git"
+  },
+  "keywords": [
+    "cli",
+    "vis3d"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Visuals3D/vis3d/issues"
+  },
+  "homepage": "https://github.com/Visuals3D/vis3d#readme",
+  "dependencies": {
+    "arg": "^5.0.0",
+    "chalk": "^4.1.0",
+    "esm": "^3.2.25",
+    "execa": "^5.0.0",
+    "gitignore": "^0.6.0",
+    "inquirer": "^8.0.0",
+    "listr": "^0.14.3",
+    "ncp": "^2.0.0",
+    "pkg-install": "^1.0.0"
+  }
+}
