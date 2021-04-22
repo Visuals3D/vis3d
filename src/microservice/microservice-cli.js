@@ -142,7 +142,7 @@ export class MicroserviceCli {
             });
         }
 
-        if (!('git' in options)) {
+        if (!options.git) {
             if (options.skipPrompts) {
                 options.git = false;
             } else {
@@ -155,9 +155,9 @@ export class MicroserviceCli {
             }
         }
 
-        if (!('runInstall' in options)) {
+        if (!options.runInstall) {
             if (options.skipPrompts) {
-                options.install = false;
+                options.runInstall = false;
             } else {
                 questions.push({
                     type: 'confirm',

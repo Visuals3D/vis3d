@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import { MicroserviceCli } from './microservice/microservice-cli';
+import { ServiceCli } from './service/service-cli';
 
 const validTemplateTypes = ['microservice', 'service'];
 
@@ -25,6 +26,6 @@ export async function generate(args, options) {
   if (options.templateType === 'microservice') {
     MicroserviceCli.cliRun(args, options);
   } else if (options.templateType === 'service') {
-
+    ServiceCli.cliRun(args, options);
   }
 }
