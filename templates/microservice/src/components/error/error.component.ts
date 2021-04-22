@@ -1,8 +1,8 @@
 // -------------------- Packages -----------------
 
 // --------------------- Models ------------------
-import { ErrorModel } from "../../../../shared/models/general/error/error.model";
-import { ErrorType, ErrorTypeHttpStatusMap} from "../../../../shared/models/general/error/error-type.model";
+import { ErrorModel } from "../../../models/error/error.model";
+import { ErrorType, ErrorTypeHttpStatusMap} from "../../../models/error/error-type.model";
 
 // ------------------- Components ----------------
 

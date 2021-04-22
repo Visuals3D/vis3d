@@ -22,7 +22,7 @@ const loggerService: LoggerService = LoggerService.Instance;
 
 const app = express();
 const isProduction: boolean = process.env.NODE_ENV === "production";
-const port: string = process.env.SERVER_PORT;
+let port: string = process.env.PORT ? process.env.PORT : '8080';
 
 const allowedOrigins: string[] = JSON.parse(process.env.ALLOWED_ORIGINS);
 
@@ -53,6 +53,7 @@ app.use((req: any, res: any, next: any) => {
   const err = new ErrorComponent("Route not found: " + req.path, ErrorType.no_data);
   next(err);
 });
+
 
 // start the Express server
 app.listen( port, () => {

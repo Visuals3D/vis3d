@@ -6,7 +6,6 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "copy-assets": "ts-node tools/copyAssets",
-    "lint": "tslint -c tslint.json -p tsconfig.json --fix",
     "tsc": "tsc",
     "dev:start": "npm-run-all build start",
     "dev": "nodemon -e ts, npm run dev:start",
@@ -20,33 +19,32 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "async": "^3.1.0",
-    "axios": "^0.19.2",
+    "async": "^3.2.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
-    "winston": "^3.2.1"
+    "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@types/async": "^3.0.2",
-    "@types/body-parser": "^1.17.0",
-    "@types/cors": "^2.8.5",
+    "@types/async": "^3.2.6",
+    "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.10",
     "@types/dotenv": "^6.1.1",
-    "@types/errorhandler": "0.0.32",
-    "@types/express": "^4.17.0",
-    "@types/express-session": "^1.15.13",
-    "@types/fs-extra": "^8.0.0",
-    "@types/node": "^12.19.16",
-    "fs-extra": "^8.1.0",
-    "nodemon": "^1.19.1",
+    "@types/errorhandler": "1.5.0",
+    "@types/express": "^4.17.11",
+    "@types/express-session": "^1.17.3",
+    "@types/fs-extra": "^9.0.11",
+    "@types/node": "^14.14.41",
+    "fs-extra": "^9.1.0",
+    "nodemon": "^2.0.7",
     "npm-run-all": "^4.1.5",
     "openapi-typescript": "^3.2.3",
-    "redoc-cli": "^0.9.2",
-    "rimraf": "^2.6.3",
-    "ts-node": "^8.3.0",
-    "tslint": "^5.18.0",
-    "typescript": "^3.5.2"
+    "redoc-cli": "^0.11.4",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
   }
 }

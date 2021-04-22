@@ -10,8 +10,9 @@ import { ErrorComponent } from '../../components/error/error.component';
 
 // -------------------- Services -----------------
 
-import { AuthService } from "../../services/auth/auth.service";
-const googleDriveService: AuthService = AuthService.Instance;
+//How to import Services on router level:
+//import { ImportedService } from "import.service";
+//const importedService: ImportedService = ImportedService.Instance;
 
 
 router.get("/", (req: any, res: any, next: any) => {

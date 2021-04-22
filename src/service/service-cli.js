@@ -14,6 +14,7 @@ var copy = promisify(ncp);
 export class ServiceCli {
 
     static async copyTemplateFiles(templatePath, targetPath) {
+        console.log('copyTemplateFiles', targetPath)
         return copy(templatePath, targetPath, {
             clobber: false,
         });
@@ -27,7 +28,7 @@ export class ServiceCli {
 
         const templateDir = path.join(options.packageDir, 'templates', options.templateType);
         const splitPath = options.targetPath.split('/');
-        const serviceFolderPath = path.join(__dirname, '../../', splitPath.slice(0, -1).join('/'), '/services/');
+        const serviceFolderPath = path.join(process.cwd(), splitPath.slice(0, -1).join('/'), '/services/');
         const servicePath = path.join(serviceFolderPath, splitPath.slice(-1)[0]); // Generates a new Path which adds a service folder into the path
 
         fs.access(templateDir, fs.constants.R_OK, async (err) => {
@@ -45,28 +46,27 @@ export class ServiceCli {
                                 process.exit(1);
                             }
                         });
-                    } else {
-                        const tasks = new Listr(
-                            [
-                                {
-                                    title: 'Create ' + options.templateType,
-                                    task: () => this.copyTemplateFiles(templateDir, servicePath)
-
-                                },
-                                {
-                                    title: 'Initialize template',
-                                    task: () => this.initTemplate(servicePath)
-                                }
-                            ],
+                    } 
+                    const tasks = new Listr(
+                        [
                             {
-                                exitOnError: true,
-                            }
-                        );
+                                title: 'Create ' + options.templateType,
+                                task: () => this.copyTemplateFiles(templateDir, servicePath)
 
-                        await tasks.run();
-                        console.log('%s ' + options.templateType + ' ready', chalk.green.bold('DONE'));
-                        return true;
-                    }
+                            },
+                            {
+                                title: 'Initialize template',
+                                task: () => this.initTemplate(servicePath)
+                            }
+                        ],
+                        {
+                            exitOnError: true,
+                        }
+                    );
+
+                    await tasks.run();
+                    console.log('%s ' + options.templateType + ' ready', chalk.green.bold('DONE'));
+                    return true;
                 });
             }
         });
@@ -76,10 +76,9 @@ export class ServiceCli {
     static parseArgumentsIntoOptions(rawArgs, options) {
 
         const args = arg({}, { argv: rawArgs.slice(2) });
-
+        console.log(rawArgs);
         options['targetPath'] = args._[2];
         options['packageDir'] = path.join(rawArgs[1], '../../');
-
         return options;
     }
 

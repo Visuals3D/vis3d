@@ -1,7 +1,6 @@
 // -------------------- Packages -----------------
 
 // --------------------- Models ------------------
-import { ErrorModel } from "../../../../shared/models/general/error/error.model";
 
 // ------------------- Components ----------------
 import {ErrorComponent} from "../error/error.component";
@@ -42,6 +41,7 @@ export class ErrorStackComponent {
         return null;
       }
     }
+    
 
     /**
      * Check if the error stack is empty.

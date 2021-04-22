@@ -16,8 +16,6 @@ export class ${SERVICE_NAME}Service {
 
   private static _instance: ${SERVICE_NAME}Service;
   //private importedService: ImportedService;
-  private emailService: EmailService;
-  private loggerService: LoggerService;
 
   private constructor() {
     this.importedService = ImportedService.Instance;
