@@ -1,0 +1,8 @@
+version: "3"
+
+service:
+    ${MICROSERVICE_NAME}:
+        build: .
+        container_name: ${MICROSERVICE_NAME}
+        environment: 
+            NODE_ENV: development

@@ -2,5 +2,8 @@
   "watch": ["src"],
   "ext": "ts",
   "ignore": ["src/**/*.spec.ts"],
-  "exec": "ts-node ./src/index.ts"
+  "exec": "ts-node ./src/index.ts",
+  "events": {
+    "restart": "npx openapi-typescript swagger.yaml --output  ./models/generated/api/schema.ts"
+  }
 }
