@@ -77,8 +77,6 @@ export class ServiceCli {
 
         const args = arg({}, { argv: rawArgs.slice(2) });
 
-        console.log(args);
-
         options['targetPath'] = args._[2];
         options['packageDir'] = path.join(rawArgs[1], '../../');
 
