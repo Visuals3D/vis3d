@@ -4,7 +4,7 @@ import { MicroserviceCli } from './microservice/microservice-cli';
 const validTemplateTypes = ['microservice', 'service'];
 
 async function promptForMissingTemplateType(args, options) {
-  if ('templateType' in options || args.length < 3 || validTemplateTypes.indexOf(args[3]) === -1) {
+  if (args.length < 3 || validTemplateTypes.indexOf(args[3]) === -1) {
       const answers = await inquirer.prompt([{
           type: 'list',
           name: 'templateType',
@@ -13,6 +13,8 @@ async function promptForMissingTemplateType(args, options) {
       }]);
       options['templateType'] = answers.templateType
       args.push(answers.templateType);
+  } else {
+    options['templateType'] = args[3];
   }
   return options;
 }

@@ -5,14 +5,14 @@ async function replaceServiceName(filePath, microserviceName) {
     return new Promise((resolve, reject) => {
         fs.readFile(filePath, 'utf8', function (err,data) {
             if (err) {
-                console.log(err);
+                console.error(err);
                 reject(err);
             } else {
             var result = data.replace(/\${MICROSERVICE_NAME}/g, microserviceName);
             
             fs.writeFile(filePath, result, 'utf8', function (err) {
                 if  (err) {
-                    console.log(err);
+                    console.error(err);
                     reject(err);
                 } else {
                     resolve();

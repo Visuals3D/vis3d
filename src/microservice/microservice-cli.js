@@ -77,7 +77,7 @@ export class MicroserviceCli {
                         {
                             title: 'Initialize git',
                             task: () => this.initGit(options.targetPath),
-                            enabled: () => options.git,
+                            skip: () => !options.git,
                         },
                         {
                             title: 'Install dependencies',
@@ -119,10 +119,13 @@ export class MicroserviceCli {
             }
         );
 
+        console.log(args);
+
         options['git'] = args['--git'] || false;
         options['runInstall'] = args['--install'] || false;
         options['targetPath'] = args._[2];
         options['packageDir'] = path.join(rawArgs[1], '../../');
+        options['skipPrompts'] = args['--yes'] || false;
  
         return options;
     }
@@ -139,7 +142,7 @@ export class MicroserviceCli {
             });
         }
 
-        if (!options.git) {
+        if (!('git' in options)) {
             if (options.skipPrompts) {
                 options.git = false;
             } else {
@@ -152,7 +155,7 @@ export class MicroserviceCli {
             }
         }
 
-        if (!options.install) {
+        if (!('runInstall' in options)) {
             if (options.skipPrompts) {
                 options.install = false;
             } else {
@@ -175,7 +178,6 @@ export class MicroserviceCli {
     }
 
     static async cliRun(args, options) {
-        console.log('microservice', args, options);
         await this.parseArgumentsIntoOptions(args, options);
         await this.promptForMissingOptions(options);
         await this.generate(options);

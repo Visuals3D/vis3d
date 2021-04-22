@@ -17,6 +17,8 @@ async function promptForMissingAction(args, options) {
             args.push(answers.action);
             options.action = answers.action;
         }
+    } else {
+        options['action'] = args[2];
     }
 
     return options;
