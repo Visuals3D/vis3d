@@ -119,8 +119,6 @@ export class MicroserviceCli {
             }
         );
 
-        console.log(args);
-
         options['git'] = args['--git'] || false;
         options['runInstall'] = args['--install'] || false;
         options['targetPath'] = args._[2];
