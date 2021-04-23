@@ -1,0 +1,181 @@
+_type: export
+__export_format: 4
+__export_date: 2021-04-23T22:36:34.833Z
+__export_source: insomnia.desktop.app:v2021.2.2
+resources:
+  - _id: req_wrk_26fa530600ea45e298aacb902b4a8253db8ac1c2
+    parentId: fld_wrk_26fa530600ea45e298aacb902b4a8253db8ac1c2
+    modified: 1619216799977
+    created: 1619215316980
+    url: "{{ base_url }}/helloworld"
+    name: Hello World
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1619215316980
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_wrk_26fa530600ea45e298aacb902b4a8253db8ac1c2
+    parentId: wrk_26fa530600ea45e298aacb902b4a8253
+    modified: 1619215316982
+    created: 1619215316982
+    name: HelloWorld
+    description: The default hello World url.
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1619215316982
+    _type: request_group
+  - _id: wrk_26fa530600ea45e298aacb902b4a8253
+    parentId: null
+    modified: 1619215319645
+    created: 1619215319645
+    name: ${MICROSERVICE_NAME} 1.0.0
+    description: This is a auto generated Microservice
+    scope: design
+    _type: workspace
+  - _id: env_6621fed8899f36802467f63ea873828f32463f68
+    parentId: wrk_26fa530600ea45e298aacb902b4a8253
+    modified: 1619215316986
+    created: 1619215316983
+    name: Base environment
+    data:
+      base_url: "{{ scheme }}://{{ host }}{{ base_path }}"
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1619215316983
+    _type: environment
+  - _id: jar_6621fed8899f36802467f63ea873828f32463f68
+    parentId: wrk_26fa530600ea45e298aacb902b4a8253
+    modified: 1619215322369
+    created: 1619215322369
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_5504ff4ccd1c4ef491f21b0e87c78ed6
+    parentId: wrk_26fa530600ea45e298aacb902b4a8253
+    modified: 1619217113961
+    created: 1619215319646
+    fileName: ${MICROSERVICE_NAME} 1.0.0
+    contents: |
+      openapi: 3.0.1
+      info:
+        title: ${MICROSERVICE_NAME}
+        description: This is a auto generated Microservice
+        termsOfService: "https://www.npmjs.com/package/@visuals3d/vis3d"
+        contact:
+          email: example@example.com
+        version: 1.0.0
+      externalDocs:
+        description: Find out more
+        url: https://example.com
+      servers:
+        - description: Development
+          url: http://localhost:8080/
+        - description: Production
+          url: https://example.com
+      tags:
+      - name: HelloWorld
+        description: The default hello World url.
+        externalDocs:
+          description: Find out more
+          url: https://example.de
+      paths:
+        /helloworld:
+          get:
+            tags:
+            - HelloWorld
+            summary: Hello World
+            description: Simple Hello World Test Request.
+            operationId: HelloWorld
+            responses:
+              "200":
+                description: Hello World
+                content:
+                  string:
+                    schema:
+                      $ref: '#/components/schemas/HelloWorldRes'
+              "500":
+                description: internal Server Error
+                content:
+                  string:
+                    schema:
+                      $ref: '#/components/schemas/ErrorList'
+      components:
+        schemas:
+          ErrorList:
+            type: array
+            items:
+              type: object
+              properties:
+                input_id:
+                  type: string
+                  example: general
+                error_type:
+                  type: string
+                  example: system_error
+          HelloWorldRes:
+            type: string
+            example: Hello World
+        securitySchemes:
+          ApiKeyAuth:
+            type: apiKey
+            name: JWT Token based route protection
+            in: header
+    contentType: yaml
+    _type: api_spec
+  - _id: uts_cd52575faa164c1eb6f93ef819442e85
+    parentId: wrk_26fa530600ea45e298aacb902b4a8253
+    modified: 1619215494036
+    created: 1619215494036
+    name: helloworld
+    _type: unit_test_suite
+  - _id: env_env_6621fed8899f36802467f63ea873828f32463f68_sub
+    parentId: env_6621fed8899f36802467f63ea873828f32463f68
+    modified: 1619217302576
+    created: 1619215316985
+    name: OpenAPI env
+    data:
+      scheme: http
+      base_path: localhost:8080
+      host: ""
+      jwtTokenBasedRouteProtection: jwtToken
+    dataPropertyOrder:
+      "&":
+        - scheme
+        - base_path
+        - host
+        - jwtTokenBasedRouteProtection
+    color: null
+    isPrivate: false
+    metaSortKey: 1619215316985
+    _type: environment
+  - _id: ut_eec870c947b44ab0956732e3926caea9
+    parentId: uts_cd52575faa164c1eb6f93ef819442e85
+    modified: 1619215502789
+    created: 1619215499981
+    requestId: req_wrk_26fa530600ea45e298aacb902b4a8253db8ac1c2
+    name: Returns 200
+    code: |-
+      const response1 = await insomnia.send();
+      expect(response1.status).to.equal(200);
+    _type: unit_test
+  - _id: ut_0fea0aa17d0e4dc6864d7e8fd5851971
+    parentId: uts_cd52575faa164c1eb6f93ef819442e85
+    modified: 1619217317538
+    created: 1619215554338
+    requestId: req_wrk_26fa530600ea45e298aacb902b4a8253db8ac1c2
+    name: Returns "Hello World"
+    code: |-
+      const response1 = await insomnia.send();
+      expect(response1.data).to.equal("Hello World");
+    _type: unit_test

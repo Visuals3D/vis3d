@@ -4,7 +4,7 @@
   "ignore": ["src/**/*.spec.ts"],
   "exec": "ts-node ./src/index.ts",
   "events": {
-    "start": "npx openapi-typescript swagger.yaml --output  ./models/generated/api/api.schema.ts",
-    "restart": "npx openapi-typescript swagger.yaml --output  ./models/generated/api/api.schema.ts"
+    "start": "npm run generate:schema",
+    "restart": "npm run generate:schema"
   }
 }

@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { replaceStringInFile } from '../helpers';
 
-const replaceableVarsFilesList = ['package.json', 'swagger.yaml', 'preset.env', 'docker-compose.yml', 'README.md'];
+const replaceableVarsFilesList = ['package.json', 'insomnia.yaml', 'preset.env', 'docker-compose.yml', 'README.md'];
 
 export async function initMicroservice(targetPath) {
     const serviceName = path.basename(targetPath);
