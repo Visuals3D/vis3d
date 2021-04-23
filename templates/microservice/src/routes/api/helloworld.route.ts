@@ -9,15 +9,14 @@ import { ErrorType } from '../../../models/error/error-type.model';
 import { ErrorComponent } from '../../components/error/error.component';
 
 // -------------------- Services -----------------
+import { HelloWorldService } from "../../services/hello-world/hello-world.service";
 
-//How to import Services on router level:
-//import { ImportedService } from "import.service";
-//const importedService: ImportedService = ImportedService.Instance;
+const helloWorldService: HelloWorldService = HelloWorldService.Instance;
 
 
 router.get("/", (req: any, res: any, next: any) => {
     res.status(200);
-    res.send('Hello World');
+    res.send(helloWorldService.getHelloWorld());
 });
 
 export { router };

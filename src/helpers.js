@@ -34,5 +34,5 @@ export function capitalizeFirstChar(str) {
 }
 
 export function camleCaseToSnakeCase(str) {
-    return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+    return str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
 }

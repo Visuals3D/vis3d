@@ -8,13 +8,13 @@ import ncp from 'ncp';
 import path from 'path';
 import { promisify } from 'util';
 import { initService } from './service-helper';
+import { camleCaseToSnakeCase } from '../helpers';
 
 var copy = promisify(ncp);
 
 export class ServiceCli {
 
     static async copyTemplateFiles(templatePath, targetPath) {
-        console.log('copyTemplateFiles', targetPath)
         return copy(templatePath, targetPath, {
             clobber: false,
         });
@@ -28,8 +28,8 @@ export class ServiceCli {
 
         const templateDir = path.join(options.packageDir, 'templates', options.templateType);
         const splitPath = options.targetPath.split('/');
-        const serviceFolderPath = path.join(process.cwd(), splitPath.slice(0, -1).join('/'), '/services/');
-        const servicePath = path.join(serviceFolderPath, splitPath.slice(-1)[0]); // Generates a new Path which adds a service folder into the path
+        const serviceFolderPath = path.join(process.cwd(), splitPath.slice(0, -1).join('/'), '/src/services/');
+        const servicePath = path.join(serviceFolderPath, camleCaseToSnakeCase(splitPath.slice(-1)[0])); // Generates a new Path which adds a service folder into the path
 
         fs.access(templateDir, fs.constants.R_OK, async (err) => {
             if (err) {
@@ -76,7 +76,6 @@ export class ServiceCli {
     static parseArgumentsIntoOptions(rawArgs, options) {
 
         const args = arg({}, { argv: rawArgs.slice(2) });
-        console.log(rawArgs);
         options['targetPath'] = args._[2];
         options['packageDir'] = path.join(rawArgs[1], '../../');
         return options;
