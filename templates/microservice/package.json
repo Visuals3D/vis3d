@@ -14,7 +14,8 @@
     "prod:start": "npm-run-all build start",
     "watch:debug": "nodemon --inspect=5852 -e ts,tsx --exec node -r ts-node/register ./src/index.ts",
     "test": " mocha -r ts-node/register 'tests/**/*.ts'",
-    "docs": "redoc-cli bundle -o index.html swagger.yaml"
+    "docs": "node ./tools/generateApiDocs.js",
+    "generate:schema": "node ./tools/generateApiSchema.js"
   },
   "author": "",
   "license": "ISC",
