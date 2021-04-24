@@ -1,0 +1,20 @@
+_id: env_env_6621fed8899f36802467f63ea873828f32463f68_sub
+type: Environment
+parentId: env_6621fed8899f36802467f63ea873828f32463f68
+modified: 1619217302576
+created: 1619215316985
+name: OpenAPI env
+data:
+  scheme: http
+  base_path: localhost:8080
+  host: ""
+  jwtTokenBasedRouteProtection: jwtToken
+dataPropertyOrder:
+  "&":
+    - scheme
+    - base_path
+    - host
+    - jwtTokenBasedRouteProtection
+color: null
+isPrivate: false
+metaSortKey: 1619215316985

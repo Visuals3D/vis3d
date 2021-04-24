@@ -1,0 +1,10 @@
+_id: ut_0fea0aa17d0e4dc6864d7e8fd5851971
+type: UnitTest
+parentId: uts_cd52575faa164c1eb6f93ef819442e85
+modified: 1619217317538
+created: 1619215554338
+requestId: req_wrk_26fa530600ea45e298aacb902b4a8253db8ac1c2
+name: Returns "Hello World"
+code: |-
+  const response1 = await insomnia.send();
+  expect(response1.data).to.equal("Hello World");

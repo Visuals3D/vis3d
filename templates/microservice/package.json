@@ -14,6 +14,7 @@
     "prod:start": "npm-run-all build start",
     "watch:debug": "nodemon --inspect=5852 -e ts,tsx --exec node -r ts-node/register ./src/index.ts",
     "test": " mocha -r ts-node/register 'tests/**/*.ts'",
+    "test:api": "inso run test --env 'OpenAPI env'",
     "docs": "node ./tools/generateApiDocs.js",
     "generate:schema": "node ./tools/generateApiSchema.js"
   },
@@ -46,6 +47,7 @@
     "fs-extra": "^9.1.0",
     "mocha": "^8.3.2",
     "nodemon": "^2.0.7",
+    "insomnia-inso": "^2.2.33",
     "npm-run-all": "^4.1.5",
     "openapi-typescript": "^3.2.3",
     "redoc-cli": "^0.11.4",

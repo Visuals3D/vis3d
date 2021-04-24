@@ -1,37 +1,35 @@
-const yaml = require('js-yaml');
 const { exec } = require('child_process');
 const fs   = require('fs');
+const {readOpenApiFile} = require('./openapiFile.helper');
 
 // Get document, or throw exception on error
 
-fs.readFile('./insomnia.yaml', 'utf8', (err, data) => {
-    if (err) {
-        console.error(err);  
-    } else {
-        try {
-            const insomnia = yaml.load(data);
-            let openapiStr = '';
-            for (let resource of insomnia.resources) {
-                if ('contentType' in resource && resource.contentType === 'yaml') {
-                    openapiStr = resource.contents;
-                }
+readOpenApiFile((openapiStr) => {
+    try {
+        fs.writeFile('./swagger.yaml', openapiStr, (err) => {
+            if (err){
+                console.error(err);
+                process.exit(1);
             }
-            fs.writeFile('./swagger.yaml', openapiStr, (err) => {
-                if (err) console.error(err);
-                exec('redoc-cli bundle -o api-docs.html swagger.yaml',
-                (error, stdout, stderr) => {
-                    console.log(stdout);
-                    console.log(stderr);
-                    if (error !== null) {
-                        console.log(`exec error: ${error}`);
+            exec('redoc-cli bundle -o api-docs.html swagger.yaml',
+            (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+                if (error !== null) {
+                    console.log(`exec error: ${error}`);
+                }
+                fs.unlink('./swagger.yaml', (err) => {
+                    if (err){
+                        console.error(err);
+                        process.exit(1);
                     }
-                    fs.unlink('./swagger.yaml', (err) => {
-                        if (err) console.error(err);
-                    }); 
-                });
+                }); 
             });
-        } catch (err) {
+        });
+    } catch (err) {
+        if (err){
             console.error(err);
+            process.exit(1);
         }
     }
 });

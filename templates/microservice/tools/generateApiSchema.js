@@ -1,24 +1,17 @@
-const yaml = require('js-yaml');
 const { exec } = require('child_process');
-const fs   = require('fs');
+const fs = require('fs');
+const { readOpenApiFile } = require('./openapiFile.helper');
 
 // Get document, or throw exception on error
 
-fs.readFile('./insomnia.yaml', 'utf8', (err, data) => {
-    if (err) {
-        console.error(err);  
-    } else {
-        try {
-            const insomnia = yaml.load(data);
-            let openapiStr = '';
-            for (let resource of insomnia.resources) {
-                if ('contentType' in resource && resource.contentType === 'yaml') {
-                    openapiStr = resource.contents;
-                }
+readOpenApiFile((openapiStr) => {
+    try {
+        fs.writeFile('./swagger.yaml', openapiStr, (err) => {
+            if (err) {
+                console.error(err);
+                process.exit(1);
             }
-            fs.writeFile('./swagger.yaml', openapiStr, (err) => {
-                if (err) console.error(err);
-                exec('npx openapi-typescript ./swagger.yaml --output ./models/generated/api/api.schema.ts',
+            exec('npx openapi-typescript ./swagger.yaml --output ./models/generated/api/api.schema.ts',
                 (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
@@ -26,12 +19,17 @@ fs.readFile('./insomnia.yaml', 'utf8', (err, data) => {
                         console.log(`exec error: ${error}`);
                     }
                     fs.unlink('./swagger.yaml', (err) => {
-                        if (err) console.error(err);
-                    }); 
+                        if (err) {
+                            console.error(err);
+                            process.exit(1);
+                        }
+                    });
                 });
-            });
-        } catch (err) {
+        });
+    } catch (err) {
+        if (err) {
             console.error(err);
+            process.exit(1);
         }
     }
 });

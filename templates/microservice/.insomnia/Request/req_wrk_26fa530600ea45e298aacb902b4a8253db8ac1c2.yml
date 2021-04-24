@@ -1,0 +1,21 @@
+_id: req_wrk_26fa530600ea45e298aacb902b4a8253db8ac1c2
+type: Request
+parentId: fld_wrk_26fa530600ea45e298aacb902b4a8253db8ac1c2
+modified: 1619216799977
+created: 1619215316980
+url: "{{ base_url }}/helloworld"
+name: Hello World
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1619215316980
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

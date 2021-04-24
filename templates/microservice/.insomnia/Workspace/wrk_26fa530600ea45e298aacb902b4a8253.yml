@@ -1,0 +1,8 @@
+_id: wrk_26fa530600ea45e298aacb902b4a8253
+type: Workspace
+parentId: null
+modified: 1619215319645
+created: 1619215319645
+name: ${MICROSERVICE_NAME} 1.0.0
+description: This is a auto generated Microservice
+scope: design
