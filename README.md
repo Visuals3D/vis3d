@@ -5,6 +5,10 @@ This cli tool is able to generate multiple frequantly used code templates for Vi
 
 
 
+![](https://raw.githubusercontent.com/Visuals3D/vis3d/master/images/thumbnail.jpg)
+
+
+
 ## Install
 
 ```bash
