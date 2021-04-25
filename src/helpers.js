@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 
 export async function replaceStringInFile(filePath, replacePreset, newString) {
     return new Promise((resolve, reject) => {
@@ -23,7 +24,12 @@ export async function replaceStringInFile(filePath, replacePreset, newString) {
     });
 }
 
-
+export function getTemplatesDirPath() {
+    
+    const fullPathName = new URL(import.meta.url).pathname.slice(1);
+    const templateDir = path.join(fullPathName,'../../templates');
+    return templateDir;
+}
 
 export function trimToCamelCase(str) {
     return str.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });

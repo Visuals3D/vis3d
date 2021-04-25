@@ -10,6 +10,8 @@ import path from 'path';
 import { projectInstall } from 'pkg-install';
 import { promisify } from 'util';
 import { initMicroservice } from './microservice-helper';
+import { getTemplatesDirPath } from '../helpers';
+import { Console } from 'console';
 
 var copy = promisify(ncp);
 var writeGitignore = promisify(gitignore.writeFile);
@@ -51,9 +53,9 @@ export class MicroserviceCli {
 
 
     static async generate(options) {
-
-        const templateDir = path.join(options.packageDir, 'templates', options.templateType);
-
+        console.log(options.packageDir);
+        const templateDir = path.join(options.packageDir, options.templateType);
+        console.log(templateDir);
         fs.access(templateDir, fs.constants.R_OK, async (err) => {
             if (err) {
                 console.error(err);
@@ -118,12 +120,12 @@ export class MicroserviceCli {
                 argv: rawArgs.slice(2),
             }
         );
-
+  
         options['git'] = args['--git'] || false;
         options['runInstall'] = args['--install'] || false;
         options['targetPath'] = args._[2];
-        options['packageDir'] = path.join(rawArgs[1], '../../');
         options['skipPrompts'] = args['--yes'] || false;
+        options['packageDir'] = getTemplatesDirPath();
  
         return options;
     }

@@ -8,7 +8,8 @@ import ncp from 'ncp';
 import path from 'path';
 import { promisify } from 'util';
 import { initService } from './service-helper';
-import { camleCaseToSnakeCase } from '../helpers';
+import { camleCaseToSnakeCase, getTemplatesDirPath } from '../helpers';
+
 
 var copy = promisify(ncp);
 
@@ -26,7 +27,7 @@ export class ServiceCli {
 
     static async generate(options) {
 
-        const templateDir = path.join(options.packageDir, 'templates', options.templateType);
+        const templateDir = path.join(options.packageDir, options.templateType);
         const splitPath = options.targetPath.split('/');
         const serviceFolderPath = path.join(process.cwd(), splitPath.slice(0, -1).join('/'), '/src/services/');
         const servicePath = path.join(serviceFolderPath, camleCaseToSnakeCase(splitPath.slice(-1)[0])); // Generates a new Path which adds a service folder into the path
@@ -77,7 +78,7 @@ export class ServiceCli {
 
         const args = arg({}, { argv: rawArgs.slice(2) });
         options['targetPath'] = args._[2];
-        options['packageDir'] = path.join(rawArgs[1], '../../');
+        options['packageDir'] = getTemplatesDirPath();
         return options;
     }
 
