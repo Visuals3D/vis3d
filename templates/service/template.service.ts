@@ -7,6 +7,9 @@
 // -------------------- Services -----------------
 //import { ImportedService } from './imported.service';
 
+// --------------------- Types -------------------
+
+
 export class ${SERVICE_NAME}Service {
 
   public static get Instance() {
