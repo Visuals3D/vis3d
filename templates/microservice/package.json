@@ -12,7 +12,7 @@
     "build": "npm-run-all clean tsc copy-assets",
     "start": "node ./dist/app/src/index.js",
     "prod:start": "npm-run-all build start",
-    "watch:debug": "nodemon --inspect=5852 -e ts,tsx --exec node -r ts-node/register ./src/index.ts",
+    "watch:debug": "nodemon --inspect-brk=0.0.0.0 -e ts,tsx --exec node -r ts-node/register ./src/index.ts",
     "test": " mocha -r ts-node/register 'tests/**/*.ts'",
     "test:api": "inso run test --env 'OpenAPI env'",
     "docs": "node ./tools/generateApiDocs.js",

@@ -1,0 +1,29 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach",
+            "port": 9229,
+            "request": "attach",
+            "remoteRoot": "/app/dist",
+            "type": "node",
+            "address": "localhost",
+            "localRoot": "${workspaceFolder}/dist/**/**.js",
+            "protocol": "inspector",
+            "cwd": "${workspaceFolder}",
+            "skipFiles": ["<node_internals>/**/*.js"],
+            "smartStep": true,
+            "restart": true,
+            "trace": "verbose",
+            "sourceMaps": true,
+            "internalConsoleOptions": "openOnSessionStart",
+            "stopOnEntry": false,
+            "sourceMapPathOverrides": {
+                "/app/src/*": "${workspaceFolder}/src/*"
+            }
+        }
+    ]
+}
