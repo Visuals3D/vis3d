@@ -42,25 +42,31 @@ contents: |
               string:
                 schema:
                   $ref: '#/components/schemas/HelloWorldRes'
+          "400":
+            description: Invalid World
+            content:
+              string:
+                schema:
+                  $ref: '#/components/schemas/Error'
           "500":
             description: internal Server Error
             content:
               string:
                 schema:
-                  $ref: '#/components/schemas/ErrorList'
+                  $ref: '#/components/schemas/Error'
   components:
     schemas:
-      ErrorList:
-        type: array
-        items:
-          type: object
-          properties:
-            input_id:
-              type: string
-              example: general
-            error_type:
-              type: string
-              example: system_error
+      Error:
+        type: object
+        properties:
+          status:
+            type: number
+          inputId:
+            type: string
+          errorType:
+            type: string
+          message:
+            type: string
       HelloWorldRes:
         type: string
         example: Hello World

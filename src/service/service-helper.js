@@ -15,5 +15,10 @@ export async function initService(targetPath) {
             console.error(err);
         }
     });
+    await fs.rename(path.join(targetPath, '/template.errors.ts'), path.join(targetPath, snakeCaseServiceName +'.errors.ts'), (err) => {
+        if (err) {
+            console.error(err);
+        }
+    });
     await replaceStringInFile(newServiceFilePath, 'SERVICE_NAME', camleCaseServiceName);
 }

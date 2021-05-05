@@ -1,7 +1,7 @@
 import path from "path";
 import winston from "winston";
 import dotenv from "dotenv";
-import { ErrorComponent } from "../../components/error/error.component";
+import { ErrorComponent } from "../../errors/api/error.component";
 
 /**
  * A service to make logging with the winston package easier.
@@ -68,19 +68,12 @@ export class LoggerService {
    * @autor Kilian Mehringer
    * @param err The error object to log
    */
-  public logError(err: ErrorComponent) {
-    this.logger.error(err.message + " Type " + err.errType);
-  }
-
-  /**
-   * Prints a error message with console.log without tslint complaining about console.log useage...
-   *
-   * @autor Kilian Mehringer
-   * @param err The error object to print
-   */
-  public debugPrintError(err: any) {
-    // tslint:disable-next-line:no-console
-    console.log("DEBUG ERROR: " , err);
+  public logError(err: Error) {
+    if (process.env.NODE_ENV === 'production') {
+      this.logger.error(err);
+    } else {
+      console.error(err);
+    }
   }
 
 }

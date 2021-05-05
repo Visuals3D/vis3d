@@ -12,10 +12,12 @@ export interface paths {
 
 export interface components {
   schemas: {
-    ErrorList: {
-      input_id?: string;
-      error_type?: string;
-    }[];
+    Error: {
+      status?: number;
+      inputId?: string;
+      errorType?: string;
+      message?: string;
+    };
     HelloWorldRes: string;
   };
 }
@@ -30,10 +32,16 @@ export interface operations {
           string: components["schemas"]["HelloWorldRes"];
         };
       };
+      /** Invalid World */
+      400: {
+        content: {
+          string: components["schemas"]["Error"];
+        };
+      };
       /** internal Server Error */
       500: {
         content: {
-          string: components["schemas"]["ErrorList"];
+          string: components["schemas"]["Error"];
         };
       };
     };

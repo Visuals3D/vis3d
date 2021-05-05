@@ -3,6 +3,8 @@
 // --------------------- Models ------------------
 import { paths, components, operations } from '../../../models/generated/api/api.schema';
 
+// ------------------- Errors --------------------
+import { InvalideWorldError } from './hello-world.errors';
 
 // ------------------- Components ----------------
 
@@ -14,12 +16,13 @@ type HelloWorldRes= components['schemas']['HelloWorldRes'];
 
 export class HelloWorldService {
 
+  private static _instance: HelloWorldService;
+  private error = false;
+
   public static get Instance() {
 
       return this._instance || (this._instance = new this());
   }
-
-  private static _instance: HelloWorldService;
 
 
   private constructor() {
@@ -27,7 +30,11 @@ export class HelloWorldService {
   }
 
   public getHelloWorld():HelloWorldRes {
-    return 'Hello World';
+    if (this.error) {
+      throw new InvalideWorldError('Im a custom error');
+    } else {
+      return 'Hello World';
+    }
   }
 
 
