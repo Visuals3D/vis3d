@@ -75,8 +75,7 @@ This Microservice can be run as a docker container both in production and in dev
 
 ### Visuals Studio Code Attachable Debugger
 
-The service will start with an open port (9229) to attach a debuger to. Default settings for Visuals Studio Code are availible. Just go to the debugging page in vsCode and hit the green Arraw next to the "Attach" selection. The Debugger will be attached and you can set breakpoints etc. 
-**Warning** There is an issue right now that prevents the service from running without a attached debugger. So you have to attache a debugger and hit continue to get the service up and running.
+The service will start with an open port (9229) to attach a debuger to. Default settings for Visuals Studio Code are availible. Just go to the debugging page in vsCode and hit the green Arrow next to the "Attach" selection. The Debugger will be attached and you can set breakpoints etc. 
 
 
 
