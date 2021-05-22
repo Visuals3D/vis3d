@@ -11,7 +11,6 @@ import { projectInstall } from 'pkg-install';
 import { promisify } from 'util';
 import { initMicroservice } from './microservice-helper';
 import { getTemplatesDirPath } from '../helpers';
-import { Console } from 'console';
 
 var copy = promisify(ncp);
 var writeGitignore = promisify(gitignore.writeFile);
@@ -170,7 +169,7 @@ export class MicroserviceCli {
 
         const answers = await inquirer.prompt(questions);
        
-        options['targetPath'] = !options.targetPath ? answers.targetPath : options.targetPath;
+        options['targetPath'] = !options.targetPath ? path.join(process.cwd(), answers.targetPath) : path.join(process.cwd(), options.targetPath);
         options['git'] = options.git || answers.git;
         options['runInstall'] = options.runInstall || answers.install;
 

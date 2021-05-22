@@ -96,7 +96,7 @@ export class ServiceCli {
 
         const answers = await inquirer.prompt(questions);
 
-        options['targetPath'] = !options.targetPath ? answers.targetPath : options.targetPath;
+        options['targetPath'] = !options.targetPath ? path.join(process.cwd(), answers.targetPath) : path.join(process.cwd(), options.targetPath);
 
         return options;
     }

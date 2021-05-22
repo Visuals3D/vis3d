@@ -1,6 +1,6 @@
-_id: spc_5504ff4ccd1c4ef491f21b0e87c78ed6
+_id: spc_${spec_}
 type: ApiSpec
-parentId: wrk_26fa530600ea45e298aacb902b4a8253
+parentId: wrk_${wrk_}
 modified: 1619217113961
 created: 1619215319646
 fileName: ${MICROSERVICE_NAME} 1.0.0
