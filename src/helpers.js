@@ -25,9 +25,8 @@ export async function replaceStringInFile(filePath, replacePreset, newString) {
 }
 
 export function getTemplatesDirPath() {
-    
     const fullPathName = new URL(import.meta.url).pathname.slice(1);
-    const templateDir = path.join(fullPathName,'../../templates');
+    const templateDir = path.join(__dirname,'../templates');
     return templateDir;
 }
 
