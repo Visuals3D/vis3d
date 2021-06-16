@@ -28,8 +28,8 @@ export class ServiceCli {
     static async generate(options) {
 
         const templateDir = path.join(options.packageDir, options.templateType);
-        const splitPath = options.targetPath.split('/');
-        const serviceFolderPath = path.join(process.cwd(), splitPath.slice(0, -1).join('/'), '/src/services/');
+        const splitPath = options.targetPath.split(path.sep);
+        const serviceFolderPath = path.join(splitPath.slice(0, -1).join(path.sep), '/src/services/');
         const servicePath = path.join(serviceFolderPath, camleCaseToSnakeCase(splitPath.slice(-1)[0])); // Generates a new Path which adds a service folder into the path
 
         fs.access(templateDir, fs.constants.R_OK, async (err) => {
@@ -64,10 +64,18 @@ export class ServiceCli {
                             exitOnError: true,
                         }
                     );
-
-                    await tasks.run();
-                    console.log('%s ' + options.templateType + ' ready', chalk.green.bold('DONE'));
-                    return true;
+                    let error = null;
+                    await tasks.run().catch((err) => {
+                        error = err;
+                    });
+                    if (error != null) {
+                        console.error(error);
+                        console.log('%s ' + options.templateType + ' failed to build', chalk.red.bold('FAILED'));
+                    } else {
+                        console.log('%s ' + options.templateType + ' ready', chalk.green.bold('DONE'));
+                    }
+                
+                    return error === null;
                 });
             }
         });
