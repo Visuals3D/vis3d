@@ -8,7 +8,7 @@ const insomniaKeysMap = {
     spc_: '',
     env_: '',
     ut_: '',
-    uts_:''
+    uts_: ''
 };
 const replaceableVarsFilesList = ['package.json', 'insomnia.yaml', 'preset.env', 'docker-compose.yml', 'README.md'];
 
@@ -16,21 +16,21 @@ function generateUuid(len) {
     let uuid = "";
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     for (let i = 0; i < len; i++) {
-      uuid += chars[Math.floor(Math.random() * chars.length)];
+        uuid += chars[Math.floor(Math.random() * chars.length)];
     }
     return uuid;
-  }
+}
 
 function getAllFiles(dirPath, arrayOfFiles) {
     const files = fs.readdirSync(dirPath)
 
     arrayOfFiles = arrayOfFiles || []
 
-    files.forEach(function(file) {
+    files.forEach(function (file) {
         if (fs.statSync(dirPath + "/" + file).isDirectory()) {
-        arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
+            arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
         } else {
-        arrayOfFiles.push(path.join(dirPath, "/", file))
+            arrayOfFiles.push(path.join(dirPath, "/", file))
         }
     })
 
@@ -48,15 +48,43 @@ async function renameInsomniaFiles(targetPath) {
     for (let file of filesList) {
         let newFile = file;
         for (const [key, value] of Object.entries(insomniaKeysMap)) {
-            if (file.includes('${'+key+'}')) {
-                let reg = new RegExp('\\${'+key+'}',"g");
+            if (file.includes('${' + key + '}')) {
+                let reg = new RegExp('\\${' + key + '}', "g");
                 newFile = file.replace(reg, value);
             }
         }
-        await fs.rename( file, newFile, (err) => {if (err != null) console.error(err)});
+        try {
+            await fs.promises.rename(file, newFile);
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
+async function renameKubernetesFiles(targetPath, serviceName) {
+    const filesList = getAllFiles(path.join(targetPath, 'kube'));
+    for (let file of filesList) {
+        let newFile = file;
+        let reg = new RegExp('\\${MICROSERVICE_NAME}', "g");
+        newFile = file.replace(reg, serviceName);
+        try {
+            await fs.promises.rename(file, newFile);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
+
+async function adjustKubernetsFilesWithKeys(targetPath, serviceName) {
+    const filesList = getAllFiles(path.join(targetPath, 'kube'));
+    for (let file of filesList) {
+        await replaceStringInFile(file, 'MICROSERVICE_NAME', serviceName);
+        for (const [key, value] of Object.entries(insomniaKeysMap)) {
+            await replaceStringInFile(file, key, value);
+        }
+    }
+    await renameKubernetesFiles(targetPath, serviceName);
+}
 
 async function adjustInsomiaFilesWithKeys(targetPath, serviceName) {
     const filesList = getAllFiles(path.join(targetPath, '.insomnia'));
@@ -77,4 +105,5 @@ export async function initMicroservice(targetPath) {
     }
     await generateInsomniaKey();
     await adjustInsomiaFilesWithKeys(targetPath, serviceName);
+    await adjustKubernetsFilesWithKeys(targetPath, serviceName);
 }

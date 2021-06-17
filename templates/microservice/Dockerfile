@@ -1,8 +1,6 @@
-FROM node:10.16.3-alpine
+FROM node:14-alpine AS builder
 
 WORKDIR /app
-
-ENV PATH /app/node_modules/.bin:$PATH
 
 COPY ./package.json /app/package.json
 
@@ -10,4 +8,20 @@ RUN npm install
 
 COPY ./ /app
 
-CMD sh -c  "if [ '$NODE_ENV' = 'production' ] ; then npm run prod:start ; else npm run watch:debug ; fi"
+RUN npm run build
+
+FROM node:14-alpine AS final
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+RUN apk add --no-cache tini
+
+COPY package*.json /app/
+
+RUN npm install --only=production
+
+COPY --from=builder /app/dist /app/dist
+
+ENTRYPOINT [ "node", "/app/dist/src/index.js" ]

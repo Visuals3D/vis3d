@@ -1,7 +1,7 @@
 # Visuals3D CLI 
 
-
-This cli tool is able to generate multiple frequantly used code templates for https://visuals3d.de Microservice based Cloud projects. The goal of this cli is to speed up the development process of new cloud based backend applications. And provide a plug and play development environment.
+This cli tool is able to generate multiple frequently used code templates for https://visuals3d.de Micro service based Cloud projects. The goal of this cli tool is to speed up the development process of new cloud based back end applications. And provide a plug and play development environment.
+Including full docker support, unit testing, openapi specs, api testing, linting, test coverage, hot reload, debugging with Visual Studio Code and Kubernetes presets for production deployment.
 
 
 
@@ -21,7 +21,7 @@ npm install -g @visuals3d/vis3d
 
 ### Create Microservice
 
-A Single boilerplate Microservice to built on top of.
+A Single boilerplate Micro service to built on top of.
 
 ```bash
 vis3d generate microservice my-mycroservice-name 
@@ -36,7 +36,7 @@ vis3d generate microservice my-mycroservice-name
 
 ### Create Service
 
-A internal service inside a microservice to outsource logik inside an api. This must be run in a microservice folder
+A internal service inside a micro service to outsource logic inside an api. This must be run in a micro service folder
 
 ```bash
 vis3d generate service my-service-name 
@@ -55,7 +55,9 @@ vis3d generate service my-service-name
 
 ### Typescript & Express
 
-The base is a expressjs Server with full Typescript support
+The heart of the micro service is a ExpressJs Server with full Typescript support
+
+
 
 ### Nodemon Hot reload
 
@@ -63,11 +65,39 @@ This Service supports Hot reload in development, even when using docker
 
 
 
-
-
 ### Full Docker support
 
-This Microservice can be run as a docker container both in production and in development
+This Microservice can be run as a docker container both in production and in development. 
+
+To run the service in development use:
+
+```shell
+docker-compose up -d
+```
+
+To build a container for production use the provided multistage build Dockerfile:
+
+```shell
+docker build
+```
+
+
+
+### Kubernetes Presets
+
+To deploy the micro service on a production system running kubernetes use the provided kubernetes yaml files in the **kube** folder. 
+
+Everything needed to deploy the service and make it accessible from the outside is provided. Note that the kubernetes cluster needs a nginx ingress-controller installed to use the provided ingress files.
+
+```shell
+kubectl apply -f ./kube/volumes/<service name>.volumes.yaml
+kubectl apply -f ./kube/ingress/<service name>.ingress.prod.yaml
+kubectl apply -f ./kube/services/<service name>.service.prod.yaml
+kubectl apply -f ./kube/config/<service name>.config.prod.yaml
+kubectl apply -f ./kube/deployment/<service name>.deployment.prod.yaml
+```
+
+There is a secrets template available as well. But secrets should be managed very carefully and especially not be stored in a file pushed onto a development git repository. It is meant to be used only in development or demo staging.
 
 
 
@@ -75,7 +105,7 @@ This Microservice can be run as a docker container both in production and in dev
 
 ### Visuals Studio Code Attachable Debugger
 
-The service will start with an open port (9229) to attach a debuger to. Default settings for Visuals Studio Code are availible. Just go to the debugging page in vsCode and hit the green Arrow next to the "Attach" selection. The Debugger will be attached and you can set breakpoints etc. 
+The service will start with an open port (9229) to attach a debugger to. Default settings for Visuals Studio Code are available. Just go to the debugging page in vsCode and hit the green Arrow next to the "Attach" selection. The Debugger will be attached and you can set breakpoints etc. 
 
 
 
@@ -84,7 +114,7 @@ The service will start with an open port (9229) to attach a debuger to. Default 
 ### Insomnia Openapi Design and Testing support
 
 The .insomnia folder or a insomnia.yaml file in the root folder is used to edit openapi documentation, create and run tests as well as debug the microservice api. 
-This file is also used to autogenerate api schemas and documentation.
+This file is also used to auto generate api schema's and documentation.
 This also allows multi repository microservice projects to be developed asynchron against api specifications.
 
 
@@ -93,7 +123,7 @@ This also allows multi repository microservice projects to be developed asynchro
 
 ### Insomnia cli support 
 
-insomnia-inso cli support for a better workflow as well as automation for testing a running version of the service against the openapi specifications and run custom tests for ci/cd pipelines.
+insomnia-inso cli support for a better work flow as well as automation for testing a running version of the service against the openapi specifications and run custom tests for ci/cd pipelines.
 
 ```bash
 npm run test:api
@@ -103,15 +133,15 @@ npm run test:api
 
 
 
-### OpenApi Support and autogenerated Typescript Schemas
+### OpenApi Support and auto generated Typescript Schemas
 
-This Microservice Api is documented via open-api specifications inside a .insomnia folder or a insomnia.yaml file will be used to generate a html documentation of the whole api via 
+This Micro service Api is documented via open-api specifications inside a .insomnia folder or a insomnia.yaml file will be used to generate a html documentation of the whole api via 
 
 ```bash
 npm run docs
 ```
 
-Also a autogeneration of the full api schema is integrated. Everytime the Hot Reload is triggered the schema will be updated to always provide the newest interfaces.
+Also a auto generation of the full api schema is integrated. Every time the Hot Reload is triggered the schema will be updated to always provide the newest interfaces.
 The schema will be generated into ./models/generated/api/api.schema.ts
 It can be triggered manually by
 
@@ -141,7 +171,7 @@ Test coverage can be calculated and printed as a list via **nyc**
 npm run test:coverage
 ```
 
-For CI/CD procedures this script call will fail if the test coverage is below 90% everage over all lines
+For CI/CD procedures this script call will fail if the test coverage is below 90% average over all lines
 
 
 
@@ -154,13 +184,17 @@ npm run lint
 npm run lint:fix
 ```
 
-The **lint:fix** call allows eslint to fix minor problems in the code automatically. This should be used in development and the version without fix is meant for CI/CD pipelines.
+The **lint:fix** call allows eslint to fix minor problems in the code automatically. This should be used in development and the version without fix is meant for CI/CD pipelines if you wish to have manipulated code for ci builds.
 
 
 
 ### Public Folder
 
 The Service provides a public folder which will be copied into the typescript compile folder to be useable in production.
+
+
+
+
 
 
 

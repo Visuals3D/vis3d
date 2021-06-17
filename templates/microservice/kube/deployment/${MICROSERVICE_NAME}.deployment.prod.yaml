@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ${MICROSERVICE_NAME}-microservice
+  name: ${MICROSERVICE_NAME}-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${MICROSERVICE_NAME}-microservice
+  strategy:
+    type: Recreate      
+  template:
+    metadata:
+      labels:
+        app: ${MICROSERVICE_NAME}-microservice
+    spec:
+# ----------------- DEFINE CONTAINER --------------        
+      containers:
+      - name: ${MICROSERVICE_NAME}-microservice
+        image: ${MICROSERVICE_NAME} # This has to be an adress to a image on a remote container registry
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+# ----------------- LIMIT RESOURCES --------------         
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "0.25"
+          limits:
+            memory: "256Mi"
+            cpu: "0.25"
+# ---------------- POD Healthchecks --------------
+        livenessProbe:
+          httpGet:
+            path: /healthy
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /healthy
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 3
+          periodSeconds: 5
+          timeoutSeconds: 3          
+# -------------------- VOLUME CLAIMS ------------------------
+        volumeMounts:
+          - name: persistent-storage
+            mountPath: /app/data
+      volumes:
+        - name: persistent-storage
+          persistentVolumeClaim:
+            claimName: ${MICROSERVICE_NAME}-data
+# ----------------- INSERT CONFIG AND SECRETS --------------        
+        envFrom:
+          - configMapRef:
+              name: ${MICROSERVICE_NAME}-microservice-config
+          - secretRef:
+              name: ${MICROSERVICE_NAME}-microservice-secrets 
+# ---------------- PROVIDE DOCKER HUB SECRETS --------------
+      imagePullSecrets:
+      - name: regcred
+      restartPolicy: Always
+

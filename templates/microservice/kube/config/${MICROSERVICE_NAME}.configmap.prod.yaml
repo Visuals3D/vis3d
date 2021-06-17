@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ${MICROSERVICE_NAME}-microservice-config
+data:
+  NODE_ENV: production
+  TITLE: ${MICROSERVICE_NAME}
+  ALLOWED_ORIGINS: '["capacitor://localhost","ionic://localhost","http://localhost","http://localhost:8080","http://localhost:8100"]'
+  PORT: '8080'
