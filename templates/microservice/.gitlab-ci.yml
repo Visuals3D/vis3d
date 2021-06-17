@@ -1,0 +1,118 @@
+image: tmaier/docker-compose:latest
+
+services:
+  - name: docker:dind
+    alias: compose-testing
+
+stages:
+  - build
+  - test
+  - deploy
+
+cache: 
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+    - dist/
+
+build:testing:
+  image: node:14
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - node_modules/
+      - dist/
+
+
+build:production:
+  image: docker:latest
+  stage: build
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --pull --cache-from $CI_REGISTRY_IMAGE:latest . -t "$CI_REGISTRY_IMAGE":$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+  only:
+    - master
+
+lint:code:
+  image: node:14
+  stage: test
+  needs: ["build:testing"]
+  allow_failure: false
+  script:
+    - npm run lint
+
+test:code:
+  image: node:14
+  stage: test
+  needs: ["build:testing"]
+  allow_failure: false
+  script:
+    - npm run test
+
+test:api:
+  image: tmaier/docker-compose:latest
+  stage: test
+  needs: ["build:testing"]
+  allow_failure: false
+  before_script:
+    - apk update 
+    - apk upgrade --no-cache
+    - apk add  --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ nodejs=14.16.1-r1 npm
+  script:
+    - mv preset.env .env
+    - docker-compose -f docker-compose-dev.yml down
+    - docker-compose -f docker-compose-dev.yml up -d --build ${MICROSERVICE_NAME}
+    - chmod +x ./wait-for-healthy-container.sh
+    - ./wait-for-healthy-container.sh ${MICROSERVICE_NAME} 120
+    - npm run test:api
+    - docker-compose -f docker-compose-dev.yml down
+
+push:production:
+  image: docker:latest
+  stage: deploy
+  needs: ["build:production", "test:api", "test:code"]
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - 'VERSION=$(cat package.json | sed ''s/.*"version": "\(.*\)".*/\1/;t;d'')'
+    - echo $VERSION
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:$VERSION
+    - docker push "$CI_REGISTRY_IMAGE":$VERSION
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
+  when: manual
+  only:
+    - master
+
+rollout:
+  stage: deploy
+  image: alpine:3.7
+  needs: ["push:production"]
+  before_script:
+    - 'VERSION=$(cat package.json | sed ''s/.*"version": "\(.*\)".*/\1/;t;d'')'
+    - apk update  && apk add --no-cache curl
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
+    - mkdir -p $HOME/.kube
+    - mv $KUBE_CONFIG $HOME/.kube/config
+  script:
+    - kubectl delete secret regcred --ignore-not-found
+    - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username=$CI_REGISTRY_USER --docker-password=$CI_REGISTRY_PASSWORD --docker-email=$CI_REGISTRY_EMAIL
+    - sed -i -e "s/\${VERSION}/$VERSION/g" kube/deployment/${MICROSERVICE_NAME}.deployment.yaml
+    - kubectl apply -f kube/config/${MICROSERVICE_NAME}.configmap.prod.yaml
+    - kubectl apply -f kube/services/${MICROSERVICE_NAME}.service.yaml
+    - kubectl apply -f kube/deployment/${MICROSERVICE_NAME}.deployment.prod.yaml
+    - kubectl apply -f kube/ingress/${MICROSERVICE_NAME}.ingress.prod.yaml
+    - kubectl apply -f kube/volumes/${MICROSERVICE_NAME}.volumes.yaml
+    - kubectl rollout restart deployment/${MICROSERVICE_NAME}-microservice
+    - kubectl rollout status deployment/${MICROSERVICE_NAME}-microservice
+  when: manual
+  only:
+    - master

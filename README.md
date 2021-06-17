@@ -1,7 +1,7 @@
 # Visuals3D CLI 
 
-This cli tool is able to generate multiple frequently used code templates for https://visuals3d.de Micro service based Cloud projects. The goal of this cli tool is to speed up the development process of new cloud based back end applications. And provide a plug and play development environment.
-Including full docker support, unit testing, openapi specs, api testing, linting, test coverage, hot reload, debugging with Visual Studio Code and Kubernetes presets for production deployment.
+This cli tool is able to generate multiple frequently used code templates for https://visuals3d.de micro service based Cloud projects. The goal of this cli tool is to speed up the development process of new cloud based back end applications. And provide a plug and play development environment.
+Including full **docker** support, **unit testing**, **openapi** specs, **api testing**, **linting**, **test coverage**, **hot reload**, **debugging** with Visual Studio Code, **Kubernetes** presets for production deployment and a full **gitlab-ci** pipeline for building testing and deployment.
 
 
 
@@ -113,9 +113,9 @@ The service will start with an open port (9229) to attach a debugger to. Default
 
 ### Insomnia Openapi Design and Testing support
 
-The .insomnia folder or a insomnia.yaml file in the root folder is used to edit openapi documentation, create and run tests as well as debug the microservice api. 
+The .insomnia folder or a insomnia.yaml file in the root folder is used to edit openapi documentation, create and run tests as well as debug the micro service api. 
 This file is also used to auto generate api schema's and documentation.
-This also allows multi repository microservice projects to be developed asynchron against api specifications.
+This also allows multi repository micro service projects to be developed in isolation against api specifications.
 
 
 
@@ -190,7 +190,7 @@ The **lint:fix** call allows eslint to fix minor problems in the code automatica
 
 ### Public Folder
 
-The Service provides a public folder which will be copied into the typescript compile folder to be useable in production.
+The Service provides a public folder which will be copied into the typescript compiled folder to be usable in production.
 
 
 
