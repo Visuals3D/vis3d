@@ -7,8 +7,6 @@ Including full **docker** support, **unit testing**, **openapi** specs, **api te
 
 ![](https://raw.githubusercontent.com/Visuals3D/vis3d/master/images/thumbnail.jpg)
 
-
-
 ## Install
 
 ```bash
@@ -99,6 +97,25 @@ kubectl apply -f ./kube/deployment/<service name>.deployment.prod.yaml
 
 There is a secrets template available as well. But secrets should be managed very carefully and especially not be stored in a file pushed onto a development git repository. It is meant to be used only in development or demo staging.
 
+
+### Gitlab Ci Pipeline
+
+![](https://raw.githubusercontent.com/Visuals3D/vis3d/master/images/ci-pipeline.png)
+
+The micro service includes a full gitlab ci pipeline. The pipeline is able to build the code and the image and push the image to a docker hub registry. In the testing stage the code will be tested via unit tests and the api will be tested by building and running the whole service inside a dind container and executing insomnia cli tests against it. 
+If that is all successful the Image will be taged with latest and the version number provided in the package.json file and pushed into the container registry. 
+From there the last rollout task inside the deploy stage can be triggered manualy to deploy the new image and kube configurations to a remote kubernetes cluster.
+
+This script is more a gideline then a production ready solution. Nothing fits for everyone.
+
+The following variables are needed in gitlab to run this script:
+
+- CI_REGISTRY = domain name of your registry provider (docker.io)
+- CI_REGISTRY_EMAIL = the email connected to your registry
+- CI_REGISTRY_IMAGE = the name of the registry repo
+- CI_REGISTRY_PASSWORD = the password for your registry
+- CI_REGISTRY_USER = the username of your registry
+- KUBE_CONFIG = the kube config file as a file variable
 
 
 
