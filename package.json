@@ -1,6 +1,6 @@
 {
   "name": "@visuals3d/vis3d",
-  "version": "1.12.2",
+  "version": "1.12.3",
   "description": "A small cli to create microservices and generate internal code templates",
   "main": "index.js",
   "bin": {
@@ -21,8 +21,8 @@
     "cli",
     "vis3d"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Kilian Mehringer",
+  "license": "GPL",
   "bugs": {
     "url": "https://github.com/Visuals3D/vis3d/issues"
   },
