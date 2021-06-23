@@ -40,11 +40,6 @@ A internal service inside a micro service to outsource logic inside an api. This
 vis3d generate service my-service-name 
 ```
 
-#### Options
-
-
-
-
 
 
 ## Features:

@@ -29,7 +29,7 @@ const allowedOrigins: string[] = JSON.parse(process.env.ALLOWED_ORIGINS);
 // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
 const corsOptions = {
   origin: (origin: string, callback: any) => {
-    if (allowedOrigins.indexOf(origin) >= 0 || !origin) {
+    if (allowedOrigins.indexOf(origin) >= 0 || allowedOrigins[0] === '*') {
       callback(null, true);
     } else {
       callback(new Error("Origin not allowed by CORS"));

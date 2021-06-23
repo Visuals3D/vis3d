@@ -10,7 +10,7 @@ services:
         environment: 
             NODE_ENV: development
             TITLE: ${MICROSERVICE_NAME}
-            ALLOWED_ORIGINS: '["capacitor://localhost","ionic://localhost","http://localhost","http://localhost:8080","http://localhost:8100"]'
+            ALLOWED_ORIGINS: '["*"]'
             PORT: 8080
         volumes:
             - ./src:/app/src
