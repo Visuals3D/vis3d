@@ -1,6 +1,6 @@
 {
   "name": "@visuals3d/vis3d",
-  "version": "1.13.0",
+  "version": "1.13.1",
   "description": "A small cli to create microservices and generate internal code templates",
   "main": "index.js",
   "bin": {

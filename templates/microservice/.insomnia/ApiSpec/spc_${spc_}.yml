@@ -1,4 +1,4 @@
-_id: spc_${spec_}
+_id: spc_${spc_}
 type: ApiSpec
 parentId: wrk_${wrk_}
 modified: 1619217113961
