@@ -1,8 +1,10 @@
-FROM node:14-alpine AS builder
+FROM node:17-alpine AS builder
 
 WORKDIR /app
 
 COPY ./package.json /app/package.json
+
+COPY ./package-lock.json /app/package-lock.json
 
 RUN npm install
 
@@ -10,7 +12,7 @@ COPY ./ /app
 
 RUN npm run build
 
-FROM node:14-alpine AS final
+FROM node:17-alpine AS final
 
 WORKDIR /app
 
