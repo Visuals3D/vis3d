@@ -1,13 +1,12 @@
 {
-  "name": "dadacon_webpage",
-  "version": "1.0.0",
-  "description": "",
+  "name": "${WEBPAGE_NAME}",
+  "version": "0.0.0",
+  "description": "The ${WEBPAGE_NAME} Webpage",
   "main": "dist/app.js",
   "scripts": {
     "clean": "rimraf dist/*",
     "copy-assets": "ts-node tools/copyAssets",
     "test": "tslint -c tslint.json -p tsconfig.json --fix",
-    "prestart": "npm run build",
     "tsc": "tsc",
     "start": "node ./dist/app/src/app.js",
     "prod:start": "npm-run-all build start",

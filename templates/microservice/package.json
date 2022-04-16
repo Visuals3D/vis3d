@@ -1,6 +1,6 @@
 {
   "name": "${MICROSERVICE_NAME}",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "The ${MICROSERVICE_NAME} Microservice",
   "main": "dist/index.js",
   "scripts": {

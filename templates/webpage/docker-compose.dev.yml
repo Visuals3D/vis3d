@@ -1,12 +1,12 @@
 version: '3.3'
 
 services:
-  webpage-dev:
+  ${WEBPAGE_NAME}-dev:
     build: 
         context: .
         dockerfile: Dockerfile.dev
-    image: webpage-dev
-    container_name: webpage-dev
+    image: ${WEBPAGE_NAME}-dev
+    container_name: ${WEBPAGE_NAME}-dev
     volumes:
       - ./src:/app/src
       - ./views:/app/views

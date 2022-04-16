@@ -18,10 +18,10 @@ services:
       - 80:80
       - 443:443
 
-  webpage:
+  ${WEBPAGE_NAME}:
     build: .
-    image: webpage
-    container_name: webpage
+    image: ${WEBPAGE_NAME}
+    container_name: ${WEBPAGE_NAME}
     restart: always
     environment:
       NODE_ENV: production 
