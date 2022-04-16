@@ -1,19 +1,27 @@
 version: '3.3'
 
 services:
-  webpage-dev:
-    build: 
-        context: .
-        dockerfile: Dockerfile.dev
-    image: webpage-dev
-    container_name: webpage-dev
+  web-server:
+    image: nginx:1.21.6-alpine
+    container_name: web-server
+    restart: always
     volumes:
-      - ./src:/app/src
-      - ./views:/app/views
-      - ./assets:/app/assets
-      - /app/node_modules
+      - /etc/letsencrypt/live/${DOMAIN_NAME}/fullchain.pem:/etc/ssl/${DOMAIN_NAME}/cert.crt
+      - /etc/letsencrypt/live/${DOMAIN_NAME}/privkey.pem:/etc/ssl/${DOMAIN_NAME}/privkey.key
+      - ./nginx.conf:/etc/nginx/templates/default.conf.template
+    command: [nginx, '-g', 'daemon off;']
+    environment:
+          DOMAIN_NAME: ${DOMAIN_NAME}
+    depends_on:
+      - webpage
+    ports:
+      - 80:80
+      - 443:443
+
+  webpage:
+    build: .
+    image: webpage
+    container_name: webpage
     restart: always
     environment:
-      NODE_ENV: development
-    ports: 
-      - 8100:8080   
+      NODE_ENV: production 

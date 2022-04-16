@@ -5,7 +5,7 @@ import express, {
   Response,
   urlencoded
 } from "express";
-import exphbs from "express-handlebars";
+import { engine } from 'express-handlebars';
 import { Server } from "http";
 import path from "path";
 import routesAPI from "../api/routes";
@@ -37,7 +37,7 @@ function initExpress(): Server {
   const app: Application = express();
 
   // Set Template engine to handlebars
-  app.engine("hbs", exphbs());
+  app.engine("hbs", engine());
   app.set("view engine", "hbs");
 
   // Middleware
