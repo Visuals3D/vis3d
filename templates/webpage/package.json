@@ -1,0 +1,50 @@
+{
+  "name": "dadacon_webpage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/app.js",
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "copy-assets": "ts-node tools/copyAssets",
+    "test": "tslint -c tslint.json -p tsconfig.json --fix",
+    "prestart": "npm run build",
+    "tsc": "tsc",
+    "start": "node ./dist/app/src/app.js",
+    "prod:start": "npm-run-all build start",
+    "build": "npm-run-all clean tsc copy-assets",
+    "dev": "nodemon src/app.ts",
+    "watch:debug": "nodemon --inspect=0.0.0.0 -e ts,tsx --exec node -r ts-node/register ./src/app.ts",
+    "watch": "nodemon -e ts,tsx --exec node -r ts-node/register ./src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "mysql": "^2.18.1",
+    "mysqldump": "^3.2.0",
+    "node-mailjet": "^3.3.1",
+    "pdf-lib": "^1.15.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.5",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.9",
+    "@types/express-handlebars": "^3.1.0",
+    "@types/mysql": "^2.15.17",
+    "@types/node": "^12.19.7",
+    "@types/node-mailjet": "^3.3.4",
+    "@types/shelljs": "^0.8.5",
+    "nodemon": "^1.19.4",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^2.6.3",
+    "shelljs": "^0.8.3",
+    "ts-node": "^8.10.2",
+    "tslint": "^5.20.1",
+    "typescript": "^3.9.7"
+  }
+}

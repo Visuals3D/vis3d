@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  webpage-dev:
+    build: 
+        context: .
+        dockerfile: Dockerfile.dev
+    image: webpage-dev
+    container_name: webpage-dev
+    volumes:
+      - ./src:/app/src
+      - ./views:/app/views
+      - ./assets:/app/assets
+      - /app/node_modules
+    restart: always
+    environment:
+      NODE_ENV: development
+    ports: 
+      - 8100:8080   

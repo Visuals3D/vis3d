@@ -1,0 +1,38 @@
+nav {
+    position: relative;
+    padding-bottom: 12px;
+    padding-top: 12px;
+    display: inline-block;
+  }
+  nav .line {
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    margin: 10px 0 0 0;
+    background: #AFC2D5;
+  }
+  nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+  }
+  nav ul li {
+    margin: 0 40px 0 0;
+    transition: all 0.4s ease;
+  }
+  nav ul li:hover {
+    opacity: 0.7;
+  }
+  nav ul li:last-child {
+    margin-right: 0;
+  }
+  nav ul li a {
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+    display: block;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    font-size: 14px;
+  }
