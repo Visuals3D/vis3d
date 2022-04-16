@@ -1,6 +1,6 @@
 # Visuals3D CLI 
 
-This cli tool is able to generate multiple frequently used code templates for https://visuals3d.de micro service based Cloud projects. The goal of this cli tool is to speed up the development process of new cloud based back end applications. And provide a plug and play development environment.
+This cli tool is able to generate multiple frequently used code templates for https://visuals3d.de microservice based Cloud projects. The goal of this cli tool is to speed up the development process of new cloud based back end applications. And provide a plug and play development environment.
 Including full **docker** support, **unit testing**, **openapi** specs, **api testing**, **linting**, **test coverage**, **hot reload**, **debugging** with Visual Studio Code, **Kubernetes** presets for production deployment and a full **gitlab-ci** pipeline for building testing and deployment.
 
 
@@ -19,7 +19,7 @@ npm install -g @visuals3d/vis3d
 
 ### Create Microservice
 
-A Single boilerplate Micro service to built on top of.
+A Single boilerplate microservice to built on top of.
 
 ```bash
 vis3d generate microservice my-mycroservice-name 
@@ -34,21 +34,30 @@ vis3d generate microservice my-mycroservice-name
 
 ### Create Service
 
-A internal service inside a micro service to outsource logic inside an api. This must be run in a micro service folder
+A internal service inside a microservice to outsource logic inside an api. This must be run in a microservice folder
 
 ```bash
 vis3d generate service my-service-name 
 ```
 
 
+### Create Webpage
 
-## Features:
+A clean nodejs express based server side rendered webpage with docker support for development and production.
+
+```bash
+vis3d generate webpage my-webpage-name 
+```
+
+
+
+## Microservice Features:
 
 
 
 ### Typescript & Express
 
-The heart of the micro service is a ExpressJs Server with full Typescript support
+The heart of the microservice is a ExpressJs Server with full Typescript support
 
 
 
@@ -78,7 +87,7 @@ docker build
 
 ### Kubernetes Presets
 
-To deploy the micro service on a production system running kubernetes use the provided kubernetes yaml files in the **kube** folder. 
+To deploy the microservice on a production system running kubernetes use the provided kubernetes yaml files in the **kube** folder. 
 
 Everything needed to deploy the service and make it accessible from the outside is provided. Note that the kubernetes cluster needs a nginx ingress-controller installed to use the provided ingress files.
 
@@ -97,7 +106,7 @@ There is a secrets template available as well. But secrets should be managed ver
 
 ![](https://raw.githubusercontent.com/Visuals3D/vis3d/master/images/ci-pipeline.png)
 
-The micro service includes a full gitlab ci pipeline. The pipeline is able to build the code and the image and push the image to a docker hub registry. In the testing stage the code will be tested via unit tests and the api will be tested by building and running the whole service inside a dind container and executing insomnia cli tests against it. 
+The microservice includes a full gitlab ci pipeline. The pipeline is able to build the code and the image and push the image to a docker hub registry. In the testing stage the code will be tested via unit tests and the api will be tested by building and running the whole service inside a dind container and executing insomnia cli tests against it. 
 If that is all successful the Image will be taged with latest and the version number provided in the package.json file and pushed into the container registry. 
 From there the last rollout task inside the deploy stage can be triggered manualy to deploy the new image and kube configurations to a remote kubernetes cluster.
 
@@ -125,9 +134,9 @@ The service will start with an open port (9229) to attach a debugger to. Default
 
 ### Insomnia Openapi Design and Testing support
 
-The .insomnia folder or a insomnia.yaml file in the root folder is used to edit openapi documentation, create and run tests as well as debug the micro service api. 
+The .insomnia folder or a insomnia.yaml file in the root folder is used to edit openapi documentation, create and run tests as well as debug the microservice api. 
 This file is also used to auto generate api schema's and documentation.
-This also allows multi repository micro service projects to be developed in isolation against api specifications.
+This also allows multi repository microservice projects to be developed in isolation against api specifications.
 
 
 
@@ -147,7 +156,7 @@ npm run test:api
 
 ### OpenApi Support and auto generated Typescript Schemas
 
-This Micro service Api is documented via open-api specifications inside a .insomnia folder or a insomnia.yaml file will be used to generate a html documentation of the whole api via 
+This microservice Api is documented via open-api specifications inside a .insomnia folder or a insomnia.yaml file will be used to generate a html documentation of the whole api via 
 
 ```bash
 npm run docs
@@ -203,6 +212,51 @@ The **lint:fix** call allows eslint to fix minor problems in the code automatica
 ### Public Folder
 
 The Service provides a public folder which will be copied into the typescript compiled folder to be usable in production.
+
+
+
+
+## Webpage Features:
+
+
+
+### ExpressJS
+
+Usage of expressjs as a solid baseline that harmonises well with nodejs.
+
+
+
+### Handlebars
+
+A very user friendly templating engine for expressjs that uses real html with some additional syntax to allow complex templating for larger website projects.
+
+
+
+### Typescript
+
+Full typescript support added on top of nodejs with compilation for development and production build in.
+
+
+
+### Docker
+
+Also full docker support fo development and production. Docker-compose files can be used to spin up development and production environments with a single line on every docker friendly machine. 
+
+
+
+### Nginx
+
+Nginx reverse proxy as http server used in the production docker-compose file to deploy for production in a docker swarm cluster or just with docker-compose.
+
+
+
+### Hot reload
+
+The generated webpage has build in hot reload within the development docker container but it will not refresh the browser on code changes automatically. 
+
+
+
+
 
 
 
