@@ -1,6 +1,7 @@
 # Visuals3D CLI 
 
-This cli tool is able to generate multiple frequently used code templates for https://visuals3d.de microservice based Cloud projects. The goal of this cli tool is to speed up the development process of new cloud based back end applications. And provide a plug and play development environment.
+This cli tool is able to generate multiple frequently used code templates for https://visuals3d.de microservice based Cloud projects. The goal of this cli tool is to speed up the development process of new cloud based backend applications. And provide a plug and play development environment.
+The tool can generate single microservices and server side rendered webpages.
 Including full **docker** support, **unit testing**, **openapi** specs, **api testing**, **linting**, **test coverage**, **hot reload**, **debugging** with Visual Studio Code, **Kubernetes** presets for production deployment and a full **gitlab-ci** pipeline for building testing and deployment.
 
 
